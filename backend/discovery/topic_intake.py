@@ -338,14 +338,48 @@ def run_intake(channels=(1, 2, 3), force: bool = False) -> Dict[str, Any]:
 
 
 def consume_next_pauta(channel_num: int) -> Optional[Dict[str, Any]]:
-    """Usado pelo rollover: entrega a próxima pauta pronta (status scripted) e a marca como em produção."""
+    """Usado pelo rollover: entrega a próxima pauta pronta (status scripted) inédita e a marca como em produção.
+    Garante que pautas já publicadas em dias anteriores não sejam recicladas indevidamente."""
     queue = radar.load_queue()
+    
+    # Carrega títulos já publicados no ledger para proteção estrita anti-duplicidade
+    published_titles = set()
+    try:
+        ledger_path = BASE_DIR / "workspace/automation/uploaded_videos_ledger.json"
+        if ledger_path.exists():
+            ldata = json.loads(ledger_path.read_text(encoding="utf-8"))
+            for u in ldata.get("uploads", []):
+                t = u.get("title", "").strip().lower()
+                if t:
+                    published_titles.add(t)
+    except Exception as e:
+        logger.warning("Falha ao ler ledger de uploads em consume_next_pauta: %s", e)
+
+    changed = False
     for p in queue.get(str(channel_num), []):
         if p.get("status") == "scripted":
+            pkg = p.get("package", {})
+            long_title = (pkg.get("long", {}).get("title") or "").strip().lower()
+            
+            # Se o documentário principal já foi publicado no canal, marca como consumido e pula
+            if long_title and long_title in published_titles:
+                logger.info(
+                    "Pauta %s ('%s') já publicada anteriormente no canal. Marcando como consumida.",
+                    p.get("pauta_id"),
+                    pkg.get("long", {}).get("title"),
+                )
+                p["status"] = "consumed"
+                p["used_on"] = p.get("used_on") or _today_brt()
+                changed = True
+                continue
+
             p["status"] = "in_production"
             p["used_on"] = _today_brt()
             radar.save_queue(queue)
             return p
+
+    if changed:
+        radar.save_queue(queue)
     return None
 
 

@@ -1,0 +1,49 @@
+# ==============================================================================
+# Dark Studio AI Platform — Institutional .gitignore
+# Protects OAuth2 tokens, API keys, local databases, and heavy video binaries
+# ==============================================================================
+
+# 1. Secrets, Environment & YouTube OAuth2 Credentials (NEVER COMMIT)
+.env
+.env.*
+!.env.example
+*token*
+*secret*
+*credentials*
+*:Zone.Identifier*
+workspace/credentials/
+workspace/tokens/
+workspace/youtube_tokens/
+workspace/api_settings.json
+
+# 2. Local SQLite Databases & Journals
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# 3. Workspace runtime, caches, downloads & renders
+workspace/
+
+# 4. Runtime Logs & Temporary Files
+*.log
+*.bak*
+workspace/logs/
+workspace/pids/
+workspace/backup_*/
+workspace/credentials_backup_*/
+workspace/server.log
+/tmp/
+
+# 5. Python Bytecode & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+venv/
+.venv/
+env/

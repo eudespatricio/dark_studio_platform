@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Studio Platform — Autonomous YouTube Production Studio</title>
+  <style>
+    :root {
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #38BDF8;
+      --accent: #10B981;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+    h1 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 40px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      text-align: left;
+      margin-bottom: 50px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .card h3 { font-size: 18px; margin-bottom: 10px; color: var(--primary); }
+    .card p { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+    .links-bar {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid var(--border);
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: #0F172A; }
+    .btn-primary:hover { background: #7DD3FC; }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--text-muted); }
+    .yt-compliance-notice {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #64748B;
+      line-height: 1.5;
+    }
+    .yt-compliance-notice a { color: var(--primary); text-decoration: none; }
+    .yt-compliance-notice a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-badge">⚡ AUTONOMOUS STUDIO ENGINE</div>
+    <h1>Dark Studio Platform</h1>
+    <p class="subtitle">Plataforma autônoma para produção editorial, renderização audiovisual cinematográfica e agendamento inteligente em canais do YouTube.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>🎬 Produção Automatizada</h3>
+        <p>Geração de roteiros de alta retenção baseados na neurociência, síntese de voz neural e alinhamento visual de cenas cinematográficas.</p>
+      </div>
+      <div class="card">
+        <h3>🛡️ Cadence Guard Anti-Spam</h3>
+        <p>Gerenciamento inteligente de intervalos entre uploads para proteção contra flood e conformidade rigorosa com as diretrizes do YouTube.</p>
+      </div>
+      <div class="card">
+        <h3>🔒 Gestão Local-First</h3>
+        <p>Arquitetura auto-hospedada em ambiente local (WSL) com tokens criptografados e proteção de dados confidenciais dos canais.</p>
+      </div>
+    </div>
+
+    <div class="links-bar">
+      <a href="privacy.html" class="btn btn-primary">Política de Privacidade</a>
+      <a href="terms.html" class="btn btn-outline">Termos de Serviço</a>
+      <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener" class="btn btn-outline">Termos do YouTube</a>
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="btn btn-outline">Privacidade do Google</a>
+    </div>
+
+    <div class="yt-compliance-notice">
+      Esta aplicação utiliza os Serviços de API do YouTube (YouTube Data API v3).<br>
+      Ao utilizar o serviço, você concorda com os <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener">Termos de Serviço do YouTube</a> e a <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidade do Google</a>.<br>
+      Você pode revogar permissões a qualquer momento em <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Configurações de Segurança do Google</a>.
+    </div>
+  </div>
+</body>
+</html>

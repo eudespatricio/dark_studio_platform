@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dark Studio Command Center // Autonomous YouTube Media Engine</title>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/static/styles.css" onerror="this.href='styles.css'" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- ==================== TOP BROADCAST HEADER ==================== -->
+    <header class="broadcast-header">
+      <div class="brand-cluster">
+        <div class="studio-logo">
+          <span class="logo-core"></span>
+          <span class="logo-ring"></span>
+        </div>
+        <div class="brand-titles">
+          <div class="brand-top-row">
+            <h1>DARK STUDIO <span class="accent-cyan">COMMAND CENTER</span></h1>
+            <span class="version-pill">BROADCAST OS v4.2</span>
+          </div>
+          <p class="brand-subtitle">Data-Driven Multi-Channel Remodeling • 16:9 Long-Form + 9:16 Shorts Engine</p>
+        </div>
+      </div>
+
+      <!-- Exclusive Channel Clickable Header Hub Card + Multi-Channel Quick Switcher -->
+      <div class="header-channel-selector" style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 6px; justify-content: center;">
+          <button type="button" id="hdrPillCh1" onclick="window.openChannelHub(1)" style="background: rgba(6, 182, 212, 0.2); border: 1px solid #06b6d4; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 5px; cursor: pointer;">🥇 #1 Via</button>
+          <button type="button" id="hdrPillCh2" onclick="window.openChannelHub(2)" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.15); color: #94a3b8; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 5px; cursor: pointer;">🥈 #2 Quant</button>
+          <button type="button" id="hdrPillCh3" onclick="window.openChannelHub(3)" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.15); color: #94a3b8; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 5px; cursor: pointer;">🥉 #3 BioHack</button>
+          <button type="button" id="hdrPillCh4" onclick="window.openChannelHub(4)" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(236,72,153,0.4); color: #f472b6; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 5px; cursor: pointer;">🎵 #4 Music</button>
+        </div>
+        <button id="btnHeaderChannelHub" class="header-channel-card-btn" title="Abrir Central do Canal Ativo">
+          <div class="h-channel-badge-row">
+            <span class="h-channel-badge">4 CANAIS ATIVOS</span>
+            <span class="h-channel-status-pill">CONECTADO</span>
+          </div>
+          <div class="h-channel-title">
+            <span class="pulse-dot-green"></span>
+            <span class="h-channel-name">A Via da Descoberta</span>
+            <span class="h-channel-handle mono">@AViadaDescoberta</span>
+          </div>
+          <div class="h-channel-meta">
+            <div class="h-channel-counts" id="headerChannelCounts">
+              <span>📱 <strong>7</strong> Shorts</span> • <span>⏱️ <strong>1</strong> Médio</span> • <span>🎥 <strong>6</strong> Longos</span>
+            </div>
+            <span class="h-meta-cta">CENTRAL DO CANAL ➔</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Live Telemetry & Quick Action -->
+      <div class="header-telemetry-cluster">
+        <!-- YouTube Data API Live Quota Gauge -->
+        <div id="ytQuotaHeaderBadge" class="yt-quota-header-badge" title="Cota diária da YouTube Data API v3 • Reseta às 04:00 BRT (00:00 Pacific)">
+          <div class="yt-quota-icon-wrap">
+            <svg class="yt-svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </div>
+          <div class="yt-quota-meta">
+            <div class="yt-quota-top">
+              <span class="yt-quota-title">YOUTUBE API QUOTA</span>
+              <span id="ytQuotaHeaderStatus" class="yt-quota-status-pill normal">NORMAL</span>
+            </div>
+            <div class="yt-quota-bar-row">
+              <div class="yt-quota-progress-track">
+                <div id="ytQuotaHeaderBar" class="yt-quota-progress-fill" style="width: 0%;"></div>
+              </div>
+              <span id="ytQuotaHeaderText" class="yt-quota-text mono"><strong id="ytQuotaUsedVal">0</strong> / 20.000 <span class="yt-quota-sub" id="ytQuotaPctVal">(0%)</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- OAuth Token Expiry / Health Badge (Janela de 7 Dias do Modo Teste) -->
+        <div id="oauthExpiryHeaderBadge" class="oauth-expiry-header-badge normal" title="Validade dos Tokens OAuth2 (Janela de 7 dias do Modo Teste)">
+          <div class="oauth-icon-wrap">
+            <svg class="oauth-svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="7.5" cy="15.5" r="4.5"/>
+              <path d="M10.5 12.5L20 3m-3 0l3 3m-4 1l2 2"/>
+            </svg>
+          </div>
+          <div class="oauth-meta">
+            <div class="oauth-top">
+              <span class="oauth-title">OAUTH RENOVAÇÃO</span>
+              <span id="oauthStatusPill" class="oauth-status-pill normal">7.0 DIAS</span>
+            </div>
+            <div class="oauth-sub-row">
+              <span id="oauthSubtitle" class="oauth-sub mono">4 Canais Ativos</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="wsTelemetryBadge" class="ws-telemetry-badge connected" title="Conectado ao barramento de telemetria em tempo real">
+          <span class="pulse-dot"></span>
+          <div class="ws-meta">
+            <span class="ws-title">LIVE WEBSOCKET TELEMETRY</span>
+            <span id="wsStatusSubtext" class="ws-sub">ws://pipeline • 12ms • 6 stages ready</span>
+          </div>
+        </div>
+        <button id="btnQuickStartJob" class="btn-neon-primary">
+          <span class="btn-icon">⚡</span>
+          <span>Disparar Remodelagem (16:9 + 9:16)</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== GLOBAL KPI RIBBON ==================== -->
+    <section class="global-kpi-ribbon" aria-label="KPIs Globais do Estúdio">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">NICHE OPPORTUNITY SCORE (TOP 3)</span>
+          <span class="kpi-tag cyan">NOS DATA-DRIVEN</span>
+        </div>
+        <div class="kpi-main">
+          <span id="kpiAvgNos" class="kpi-value">91.9</span>
+          <span class="kpi-unit">/ 100</span>
+        </div>
+        <div class="kpi-footer">
+          <span class="kpi-trend up">▲ +14.2% vs média global</span>
+          <span class="kpi-sub">3 nichos de alto RPM ativos</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">OUTLIERS VALIDADOS (&ge; 3.0x)</span>
+          <span class="kpi-tag emerald">CROSS-LANGUAGE</span>
+        </div>
+        <div class="kpi-main">
+          <span id="kpiOutliersCount" class="kpi-value">18</span>
+          <span class="kpi-unit">vídeos prontos</span>
+        </div>
+        <div class="kpi-footer">
+          <span class="kpi-trend up">Pico 8.4x Média do Canal</span>
+          <span class="kpi-sub">EN / DE / JA / ES &rarr; PT-BR</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">PIPELINE QUALITY SCORE (PQS)</span>
+          <span class="kpi-tag violet">QUALITY GATE &ge; 80</span>
+        </div>
+        <div class="kpi-main">
+          <span id="kpiAvgPqs" class="kpi-value">94.5</span>
+          <span class="kpi-unit">/ 100</span>
+        </div>
+        <div class="kpi-footer">
+          <span class="kpi-trend up">100% Zero Content-ID Claim</span>
+          <span class="kpi-sub">-14.0 LUFS Broadcast Sync</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">POST-PUBLISH SCORE (PPPS)</span>
+          <span class="kpi-tag amber">RETENÇÃO &amp; CTR</span>
+        </div>
+        <div class="kpi-main">
+          <span id="kpiAvgPpps" class="kpi-value">88.7</span>
+          <span class="kpi-unit">/ 100</span>
+        </div>
+        <div class="kpi-footer">
+          <span class="kpi-trend up">CTR Médio 10.8% • AVD 64%</span>
+          <span class="kpi-sub">Shorts 9:16 gerando +34% subs</span>
+        </div>
+      </div>
+
+      <div class="kpi-card finops-highlight">
+        <div class="kpi-header">
+          <span class="kpi-label">FINOPS: CUSTO API vs ADSENSE</span>
+          <span class="kpi-tag emerald">ROI ATIVO</span>
+        </div>
+        <div class="kpi-main">
+          <span id="kpiFinopsRoi" class="kpi-value">41.2x</span>
+          <span id="kpiFinopsNet" class="kpi-unit">+$5,480/mês</span>
+        </div>
+        <div class="kpi-footer">
+          <span id="kpiFinopsCost" class="kpi-trend">$0.26 / vídeo (Gemini + ElevenLabs)</span>
+          <span class="kpi-sub">RPM Médio Ponderado: $8.90</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GLOBAL CHANNEL FILTER BAR ==================== -->
+    <section class="channel-filter-container">
+      <div class="channel-filter-left">
+        <span class="channel-filter-label">🎯 Canal Ativo:</span>
+        <div class="channel-pills" id="channelFilterPills">
+          <button class="channel-pill active" data-channel="all" title="Ver portfólio completo">🌐 Todos os Canais</button>
+          <button class="channel-pill" data-channel="ch-1" title="@AViadaDescoberta">🥇 A Via da Descoberta</button>
+          <button class="channel-pill" data-channel="ch-2" title="@FinancasQuanticasOficial">🥈 Finanças Quânticas</button>
+          <button class="channel-pill" data-channel="ch-3" title="@BioHackLongevidade">🥉 Bio Hack Longevidade</button>
+          <button class="channel-pill" data-channel="ch-4" title="@aintnohumanoficial" style="border-color: rgba(236,72,153,0.4);">🎵 Ain't No Human</button>
+        </div>
+      </div>
+      <div class="channel-filter-info">
+        Filtro de Partição: <strong id="activeFilterLabel">Todos os Temas</strong>
+      </div>
+    </section>
+
+    <!-- ==================== NAVIGATION TABS (5 PANELS) ==================== -->
+    <nav class="studio-nav-tabs" role="tablist" aria-label="Navegação dos 5 Painéis do Dark Studio">
+      <button class="nav-tab active" role="tab" aria-selected="true" data-target="panel-niches">
+        <span class="tab-step">01</span>
+        <div class="tab-text">
+          <span class="tab-title">Niche Intelligence &amp; Top 3</span>
+          <span class="tab-desc">NOS 0-100 &bull; 5 Métricas Data-Driven</span>
+        </div>
+      </button>
+
+      <button class="nav-tab" role="tab" aria-selected="false" data-target="panel-outliers">
+        <span class="tab-step">02</span>
+        <div class="tab-text">
+          <span class="tab-title">Outlier Radar (&ge; 3.0x)</span>
+          <span class="tab-desc">Heatmap Most Replayed &bull; 1-Click Job</span>
+        </div>
+      </button>
+
+      <button class="nav-tab" role="tab" aria-selected="false" data-target="panel-pipeline">
+        <span class="tab-step">03</span>
+        <div class="tab-text">
+          <span class="tab-title">Live Pipeline &amp; Telemetria</span>
+          <span class="tab-desc">WebSocket 6 Etapas &bull; Logs em Streaming</span>
+        </div>
+        <span id="navPipelineActiveBadge" class="tab-live-pill">LIVE</span>
+      </button>
+
+      <button class="nav-tab" role="tab" aria-selected="false" data-target="panel-studio">
+        <span class="tab-step">04</span>
+        <div class="tab-text">
+          <span class="tab-title">Studio Preview &amp; Quality Gate</span>
+          <span class="tab-desc">Players 16:9 + 9:16 &bull; Auditoria PQS</span>
+        </div>
+      </button>
+
+      <button class="nav-tab" role="tab" aria-selected="false" data-target="panel-analytics">
+        <span class="tab-step">05</span>
+        <div class="tab-text">
+          <span class="tab-title">Analytics Multi-Canal &amp; FinOps</span>
+          <span class="tab-desc">Chart.js Top 3 &bull; PPPS &bull; Custos API</span>
+        </div>
+      </button>
+
+      <button class="nav-tab" role="tab" aria-selected="false" data-target="panel-apis">
+        <span class="tab-step">06</span>
+        <div class="tab-text">
+          <span class="tab-title">🔑 Controle de APIs &amp; Motores</span>
+          <span class="tab-desc">Gemini &bull; ElevenLabs &bull; YouTube &bull; Circuit Breaker</span>
+        </div>
+      </button>
+
+      <button class="nav-tab" role="tab" aria-selected="false" data-target="panel-channel-hub" id="tabNavChannelHub">
+        <span class="tab-step">07</span>
+        <div class="tab-text">
+          <span class="tab-title">🏛️ Hub do Canal</span>
+          <span class="tab-desc">Postagens &bull; Grade &bull; Shorts &bull; Longos</span>
+        </div>
+        <span class="tab-live-pill" style="background: rgba(0, 245, 212, 0.2); color: #00F5D4; border-color: #00F5D4;">HUB</span>
+      </button>
+    </nav>
+
+    <!-- ==================== MAIN WORKSPACE PANELS ==================== -->
+    <main class="studio-workspace">
+
+      <!-- ===================================================================
+           PAINEL 1: NICHE INTELLIGENCE (DATA-DRIVEN TOP 3)
+           =================================================================== -->
+      <section id="panel-niches" class="studio-panel active" role="tabpanel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-eyebrow">MOTOR DE DESCOBERTA DE MERCADO // FÓRMULA NOS (0–100)</div>
+            <h2>Niche Intelligence &amp; Portfólio Top 3 Canais Alavancados</h2>
+            <p class="panel-description">
+              Seleção 100% orientada a dados calculada via <strong>Outlier Density (30%)</strong>, <strong>VPH Velocity (25%)</strong>, <strong>New Channel Success (20%)</strong>, <strong>Language Gap (15%)</strong> e <strong>RPM Potential (10%)</strong>.
+            </p>
+          </div>
+          <div class="panel-actions">
+            <button id="btnScanNiches" class="btn-neon-cyan">
+              <span class="scan-icon">📡</span>
+              <span>Executar Varredura Data-Driven</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Top 3 Leveraged Channels Cards -->
+        <div class="section-subhead">
+          <h3>🏆 Top 3 Canais Alavancados Selecionados pelo Algoritmo (Foco de Produção 16:9 + 9:16)</h3>
+          <span id="lastScanTimestamp" class="mono-badge">Última varredura: tempo real</span>
+        </div>
+        <div id="top3ChannelsGrid" class="top3-channels-grid">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <!-- Complete Data-Driven Niche Scoring Table -->
+        <div class="studio-card mt-20">
+          <div class="card-header-bar">
+            <div>
+              <h3>Matriz Comparativa de Sub-Nichos Analisados (Niche Opportunity Score — NOS 0-100)</h3>
+              <p class="card-sub">Apenas os 3 sub-nichos de maior pontuação NOS recebem alocação de cota de renderização e API.</p>
+            </div>
+            <div class="formula-legend">
+              <span class="legend-pill"><i class="dot cyan"></i>Outlier Density 30%</span>
+              <span class="legend-pill"><i class="dot emerald"></i>VPH Velocity 25%</span>
+              <span class="legend-pill"><i class="dot violet"></i>New Ch. Success 20%</span>
+              <span class="legend-pill"><i class="dot amber"></i>Language Gap 15%</span>
+              <span class="legend-pill"><i class="dot rose"></i>RPM Potential 10%</span>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="studio-table" id="nicheScoringTable">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Sub-Nicho &amp; Canal Alocado</th>
+                  <th>Idioma Origem &rarr; Alvo</th>
+                  <th>NOS Score (0-100)</th>
+                  <th>Detalhamento dos 5 Indicadores (30/25/20/15/10%)</th>
+                  <th>RPM Est.</th>
+                  <th>Status Portfólio</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="nicheTableBody">
+                <!-- Populated by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           PAINEL 2: OUTLIER RADAR (CONTEÚDOS VALIDADOS >= 3.0x)
+           =================================================================== -->
+      <section id="panel-outliers" class="studio-panel" role="tabpanel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-eyebrow">RADAR DE VÍDEOS VALIDADOS // OUTLIER SCORE &ge; 3.0x + HEATMAP MOST REPLAYED</div>
+            <h2>Outlier Radar: Conteúdos Estrangeiros de Alta Retenção</h2>
+            <p class="panel-description">
+              Vídeos que performaram de <strong>3.0x a 12.0x acima da média do próprio canal</strong> em outros idiomas, com extração automática do pico de retenção (<em>Most Replayed</em>) para geração simultânea do corte <strong>YouTube Short 9:16</strong>.
+            </p>
+          </div>
+          <div class="panel-actions filter-cluster">
+            <select id="outlierNicheFilter" class="studio-select" aria-label="Filtrar por Nicho">
+              <option value="all">Todos os Canais &amp; Nichos</option>
+              <option value="ch-1">🥇 A Via da Descoberta (Mistérios &amp; Desastres)</option>
+              <option value="ch-2">🥈 Finanças Quânticas (Algoritmos &amp; Capital)</option>
+              <option value="ch-3">🥉 Bio Hack Longevidade (Neurociência)</option>
+            </select>
+            <select id="outlierLangFilter" class="studio-select" aria-label="Filtrar por Idioma de Origem">
+              <option value="all">Todos Idiomas (EN / DE / JA / KO / ES)</option>
+              <option value="EN">🇺🇸 Inglês (EN &rarr; PT-BR)</option>
+              <option value="DE">🇩🇪 Alemão (DE &rarr; PT-BR)</option>
+              <option value="JA">🇯🇵 Japonês (JA &rarr; PT-BR)</option>
+              <option value="KO">🇰🇷 Coreano (KO &rarr; PT-BR)</option>
+            </select>
+            <div class="range-filter">
+              <label for="outlierMinScore">Outlier Mín: <strong id="outlierMinScoreVal" class="accent-emerald">3.0x</strong></label>
+              <input type="range" id="outlierMinScore" min="3.0" max="9.0" step="0.5" value="3.0" />
+            </div>
+          </div>
+        </div>
+
+        <div id="outliersGrid" class="outliers-grid">
+          <!-- Populated dynamically by app.js with SVG Heatmap Most Replayed & 1-click Remodel button -->
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           PAINEL 3: LIVE PIPELINE KANBAN & TELEMETRIA (WEBSOCKETS)
+           =================================================================== -->
+      <section id="panel-pipeline" class="studio-panel" role="tabpanel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-eyebrow">ORQUESTRADOR ASSÍNCRONO // WEBSOCKET /ws/pipeline + FFMPEG RENDER ENGINE</div>
+            <h2>Live Pipeline Kanban &amp; Telemetria de Produção</h2>
+            <p class="panel-description">
+              Acompanhamento em tempo real das 6 etapas de remodelagem transformativa: ingestão <code>yt-dlp</code>, separação vocal <code>Demucs</code>, transcriação <code>Gemini</code>, narração <code>ElevenLabs -14 LUFS</code>, renderização dupla <code>FFmpeg 16:9 + 9:16</code> e auditoria <code>PQS</code>.
+            </p>
+          </div>
+          <div class="panel-actions">
+            <button id="btnSimulateFullJob" class="btn-neon-primary">
+              <span>🚀 Simular / Disparar Job Completo em Tempo Real</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Job Live Telemetry Banner -->
+        <div id="activeJobBanner" class="active-job-telemetry-card">
+          <div class="active-job-top">
+            <div class="active-job-identity">
+              <span id="liveJobStatusBadge" class="status-badge completed">✓ QUALITY GATE APROVADO</span>
+              <h3 id="liveJobTitle">Job #DSP-2026-EE63 • O Algoritmo de US$ 100 Bilhões de Jim Simons (EN &rarr; PT-BR)</h3>
+              <span id="liveJobChannel" class="channel-pill">🥈 Canal #2: Finanças Quânticas (@FinancasQuanticasOficial)</span>
+            </div>
+            <div class="active-job-metrics">
+              <div class="metric-box">
+                <span class="m-label">PROGRESSO GLOBAL</span>
+                <span id="liveJobPercent" class="m-val accent-cyan">68%</span>
+              </div>
+              <div class="metric-box">
+                <span class="m-label">ETAPA ATUAL</span>
+                <span id="liveJobStageName" class="m-val">5. FFmpeg Render 16:9 &amp; 9:16</span>
+              </div>
+              <div class="metric-box">
+                <span class="m-label">ETA RESTANTE</span>
+                <span id="liveJobEta" class="m-val mono">00:42s</span>
+              </div>
+              <div class="metric-box">
+                <span class="m-label">LUFS / FPS</span>
+                <span class="m-val mono accent-emerald">-14.0 LUFS • 60fps</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="live-progress-track">
+            <div id="liveJobProgressBar" class="live-progress-fill" style="width: 68%;"></div>
+          </div>
+        </div>
+
+        <!-- 6-Stage Kanban Pipeline Board -->
+        <div id="pipelineKanbanBoard" class="pipeline-kanban-grid">
+          <!-- 6 Columns populated and updated live by app.js -->
+        </div>
+
+        <!-- Bottom Split: Jobs Queue Table + Real-Time Streaming Console -->
+        <div class="pipeline-bottom-split mt-20">
+          <div class="studio-card">
+            <div class="card-header-bar">
+              <h3>Fila de Jobs Processados &amp; Ativos</h3>
+              <span class="mono-badge" id="jobsTotalCounter">4 jobs registrados</span>
+            </div>
+            <div class="table-responsive">
+              <table class="studio-table compact">
+                <thead>
+                  <tr>
+                    <th>Job ID</th>
+                    <th>Vídeo Remodelado &amp; Canal</th>
+                    <th>Formatos</th>
+                    <th>Etapa / Progresso</th>
+                    <th>Nota PQS</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="pipelineJobsTableBody">
+                  <!-- Populated by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Streaming Telemetry Terminal -->
+          <div class="studio-card terminal-card">
+            <div class="card-header-bar terminal-header">
+              <div class="terminal-dots">
+                <span class="t-dot red"></span>
+                <span class="t-dot yellow"></span>
+                <span class="t-dot green"></span>
+                <span class="terminal-title">STREAMING TELEMETRY CONSOLE // ws://localhost:8000/ws/pipeline</span>
+              </div>
+              <div class="terminal-controls">
+                <button id="btnClearLogs" class="btn-mini">Limpar Console</button>
+              </div>
+            </div>
+            <div id="telemetryConsole" class="telemetry-console" aria-live="polite">
+              <!-- Live logs streamed here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           PAINEL 4: STUDIO PREVIEW & QUALITY SCORE (QA GATE)
+           =================================================================== -->
+      <section id="panel-studio" class="studio-panel" role="tabpanel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-eyebrow">ESTÚDIO DE REVISÃO HUMANA &amp; AUDITORIA PQS // DUAL PLAYER 16:9 + 9:16</div>
+            <h2>Studio Preview &amp; Quality Gate (PQS 0–100)</h2>
+            <p class="panel-description">
+              Inspeção sincronizada do <strong>Vídeo Longo (16:9)</strong>, do <strong>YouTube Short (9:16)</strong> com legendas dinâmicas palavra-a-palavra (estilo Hormozi) extraído do pico <em>Most Replayed</em>, simulação da Thumbnail no feed e auditoria técnica dos 4 pilares.
+            </p>
+          </div>
+          <div class="panel-actions">
+            <label for="studioJobSelector" class="selector-label">SELECIONAR JOB PROCESSADO:</label>
+            <select id="studioJobSelector" class="studio-select highlight-select" aria-label="Selecionar Job para Preview">
+              <!-- Populated by app.js -->
+            </select>
+          </div>
+        </div>
+
+        <div class="studio-card" id="liveFeedCard" style="margin-bottom:16px;">
+          <h3 style="margin:0 0 8px">📡 Produção ao vivo (ledger YouTube + Music_Band)</h3>
+          <div id="liveFeedList" style="display:flex;flex-wrap:wrap;gap:10px;max-height:230px;overflow-y:auto;font-size:11px;">Carregando...</div>
+        </div>
+
+        <div class="studio-qa-layout">
+          <!-- LEFT & CENTER: Side-by-Side Interactive Players (16:9 + 9:16) & Thumbnail Feed Preview -->
+          <div class="studio-players-column">
+            <div class="dual-players-grid">
+              <!-- PLAYER 1: 16:9 HORIZONTAL LONG-FORM -->
+              <div class="studio-card player-card">
+                <div class="player-card-header">
+                  <div>
+                    <span class="format-badge cyan">16:9 HORIZONTAL • 4K 60FPS</span>
+                    <h3 id="studioLongTitle">O Colapso Secreto da Represa de Vajont</h3>
+                  </div>
+                  <span class="transform-pill">Speed 1.04x • Crop 4% • Color LUT</span>
+                </div>
+
+                <!-- Real 16:9 Broadcast Video Player -->
+                <div id="player16x9Viewport" style="border-radius: var(--radius-md); overflow: hidden; background: #050811; border: 1px solid rgba(6, 182, 212, 0.35); position: relative;">
+                  <video id="studioVideo16x9" controls preload="metadata" style="width: 100%; display: block; aspect-ratio: 16/9; background: #050811;" poster="/workspace/thumbnails/piloto_via_descoberta_thumb.png" src="/workspace/renders/piloto_via_descoberta_16x9.mp4">
+                    Seu navegador não suporta a tag video.
+                  </video>
+                </div>
+
+                <div class="player-tech-footer" style="margin-top: 10px;">
+                  <span>🎙️ Voz Real: <strong>ElevenLabs Neural (PT-BR)</strong></span>
+                  <span>🎚️ Masterização: <strong>-14.0 LUFS EBU R128</strong></span>
+                  <span>🛡️ Status: <strong>Legendas .ASS Queimadas + H.264 AAC</strong></span>
+                </div>
+              </div>
+
+              <!-- PLAYER 2: 9:16 VERTICAL YOUTUBE SHORT -->
+              <div class="studio-card player-card short-card">
+                <div class="player-card-header">
+                  <div>
+                    <span class="format-badge violet">9:16 YOUTUBE SHORT • 720x1280</span>
+                    <h3>Corte Automático Most Replayed</h3>
+                  </div>
+                  <span class="transform-pill">Loop Infinito • Hormozi Subs</span>
+                </div>
+
+                <div class="short-phone-wrapper" style="display: flex; justify-content: center;">
+                  <video id="studioVideo9x16" controls preload="metadata" style="width: 235px; height: 418px; border-radius: 22px; object-fit: cover; background: #050811; border: 3px solid rgba(139, 92, 246, 0.55); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);" poster="/workspace/thumbnails/piloto_via_descoberta_thumb.png" src="/workspace/renders/piloto_via_descoberta_9x16.mp4">
+                    Seu navegador não suporta a tag video.
+                  </video>
+                </div>
+
+                <div class="player-tech-footer" style="margin-top: 10px;">
+                  <span>⚡ Gancho Validado 0-3s</span>
+                  <span>🎯 Ponte p/ Vídeo Longo: <strong>@AViadaDescoberta</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- YouTube Feed Thumbnail Preview Card -->
+            <div class="studio-card mt-16">
+              <div class="card-header-bar">
+                <div>
+                  <h3>Capa Oficial / Thumbnail 1280x720 (A Via da Descoberta)</h3>
+                  <p class="card-sub">Renderizada em alta definição com tipografia de alto impacto e badge exclusivo.</p>
+                </div>
+                <span class="kpi-tag emerald">CTR Preditivo 11.8%</span>
+              </div>
+              <div style="margin-top: 12px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(6, 182, 212, 0.4); max-width: 640px;">
+                <img id="studioThumbnailImg" src="/workspace/thumbnails/piloto_via_descoberta_thumb.png" alt="Thumbnail Piloto A Via da Descoberta" style="width: 100%; display: block;" />
+              </div>
+              <div class="card-header-bar">
+                <div>
+                  <h3>Preview de Thumbnail Remodelada no Feed do YouTube (Teste A/B Visual)</h3>
+                  <p class="card-sub">Comparação lado a lado no modo escuro do YouTube com estimativa preditiva de CTR.</p>
+                </div>
+                <span class="kpi-tag emerald" id="studioPredictedCtr">CTR Preditivo: 11.6% (Acima da Meta &ge; 8%)</span>
+              </div>
+
+              <div class="yt-feed-simulator" id="ytFeedSimulator">
+                <!-- Populated by app.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: PQS (Pipeline Quality Score 0-100) Audit & Approval Gate -->
+          <div class="studio-pqs-column">
+            <div class="studio-card pqs-audit-card">
+              <div class="pqs-header">
+                <span class="panel-eyebrow">QUALITY GATE AUTOMÁTICO</span>
+                <h3>Auditoria PQS (0–100)</h3>
+                <div id="pqsGateBadge" class="pqs-gate-stamp approved">
+                  ✓ APROVADO QUALITY GATE (PQS &ge; 80)
+                </div>
+              </div>
+
+              <!-- Circular Gauge for PQS -->
+              <div class="pqs-gauge-container">
+                <svg class="pqs-ring-svg" viewBox="0 0 160 160">
+                  <circle class="pqs-ring-bg" cx="80" cy="80" r="66"></circle>
+                  <circle id="pqsGaugeCircle" class="pqs-ring-fill" cx="80" cy="80" r="66" stroke-dasharray="414.69" stroke-dashoffset="24"></circle>
+                </svg>
+                <div class="pqs-gauge-center">
+                  <span id="pqsTotalScore" class="pqs-big-score">95</span>
+                  <span class="pqs-max">/ 100 PTS</span>
+                </div>
+              </div>
+
+              <!-- 4 Pillars Breakdown (/25 each) -->
+              <div class="pqs-pillars-list">
+                <div class="pqs-pillar-item">
+                  <div class="pillar-top">
+                    <span>1. Outlier Source (&ge; 3.0x)</span>
+                    <strong id="pqsPillar1" class="accent-cyan">24 / 25</strong>
+                  </div>
+                  <div class="pillar-bar"><div id="pqsBar1" class="pillar-fill cyan" style="width: 96%;"></div></div>
+                  <small>Vídeo matriz validado com 7.8x a média do canal de origem.</small>
+                </div>
+
+                <div class="pqs-pillar-item">
+                  <div class="pillar-top">
+                    <span>2. Hook &amp; Pacing (0-15s)</span>
+                    <strong id="pqsPillar2" class="accent-emerald">24 / 25</strong>
+                  </div>
+                  <div class="pillar-bar"><div id="pqsBar2" class="pillar-fill emerald" style="width: 96%;"></div></div>
+                  <small>Gancho transcrito sem intro lenta + 14 mudanças visuais/min.</small>
+                </div>
+
+                <div class="pqs-pillar-item">
+                  <div class="pillar-top">
+                    <span>3. Audio Sync (-14 LUFS)</span>
+                    <strong id="pqsPillar3" class="accent-violet">23 / 25</strong>
+                  </div>
+                  <div class="pillar-bar"><div id="pqsBar3" class="pillar-fill violet" style="width: 92%;"></div></div>
+                  <small>Demucs voz limpa + ElevenLabs neural + sidechain ducking.</small>
+                </div>
+
+                <div class="pqs-pillar-item">
+                  <div class="pillar-top">
+                    <span>4. Anti-Content-ID Transform</span>
+                    <strong id="pqsPillar4" class="accent-amber">24 / 25</strong>
+                  </div>
+                  <div class="pillar-bar"><div id="pqsBar4" class="pillar-fill amber" style="width: 96%;"></div></div>
+                  <small>Speed ramp 1.04x, crop dinâmico 4%, color grade LUT e roteiro novo.</small>
+                </div>
+              </div>
+
+              <div class="pqs-checklist">
+                <div class="check-row"><span>✅ Hash de Vídeo &amp; Áudio 100% Único</span></div>
+                <div class="check-row"><span>✅ Metadados SEO + Capítulos Gerados</span></div>
+                <div class="check-row"><span>✅ Short 9:16 Sincronizado ao Vídeo Longo</span></div>
+              </div>
+
+              <div class="pqs-actions">
+                <button id="btnApproveSchedule" class="btn-neon-emerald full-width">
+                  <span>✅ Aprovar &amp; Agendar nos Canais (YouTube Data API v3)</span>
+                </button>
+                <button id="btnReRenderScene" class="btn-secondary-outline full-width mt-8">
+                  <span>🔄 Re-sintetizar Gancho 0-15s (Gemini + TTS)</span>
+                </button>
+                <div id="scheduleFeedbackMsg" class="schedule-feedback hidden"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           PAINEL 5: MULTI-CHANNEL ANALYTICS & FINOPS
+           =================================================================== -->
+      <section id="panel-analytics" class="studio-panel" role="tabpanel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-eyebrow">TELEMETRIA PÓS-PUBLICAÇÃO // PPPS (0–100) + FINOPS API COST ENGINE</div>
+            <h2>Analytics Multi-Canal (4 canais) &amp; FinOps em Tempo Real</h2>
+            <p class="panel-description">
+              Monitoramento do crescimento acelerado dos <strong>Top 3 Canais</strong>, auditoria de performance pós-publicação (<strong>PPPS 0-100</strong>) e controle financeiro exato de custos da <strong>Gemini API + ElevenLabs API</strong> frente à receita AdSense.
+            </p>
+          </div>
+          <div class="panel-actions">
+            <span class="mono-badge">FinOps Engine: Custo Médio $0.258 / Vídeo+Short</span>
+          </div>
+        </div>
+
+        <!-- ==================== YPP MONETIZATION & QUALIFICATION RADAR ==================== -->
+        <div class="studio-card mb-20" id="yppMonetizationCard" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(6, 182, 212, 0.06) 50%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(139, 92, 246, 0.35); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);">
+          <div class="card-header-bar" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 10px; font-weight: 800; color: #A78BFA; letter-spacing: 0.12em; text-transform: uppercase;">
+                🎯 PROGRAMA DE PARCERIAS DO YOUTUBE // METAS OFICIAIS DE MONETIZAÇÃO (YPP)
+              </div>
+              <h3 style="font-size: 18px; font-weight: 800; color: #F8FAFC; margin-top: 4px; display: flex; align-items: center; gap: 8px;">
+                <span>💰 Radar de Qualificação para Monetização Acelerada</span>
+                <span class="kpi-tag violet" style="font-size: 11px;">NÍVEL 1 (500 SUBS) &bull; NÍVEL 2 (1.000 SUBS)</span>
+              </h3>
+              <p class="card-sub" style="color: #94A3B8; font-size: 12px; margin-top: 4px;">
+                Acompanhe o caminho mais rápido para aprovação: <strong>Shorts (Inscritos)</strong> + <strong>Documentários Longos (Horas de Exibição)</strong> com 100% de compliance anti-conteúdo reutilizado.
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button onclick="window.refreshYppStatus()" class="btn-refresh" style="background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.4); color: #C4B5FD; padding: 7px 14px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                <span>⚡</span> Atualizar YPP ao Vivo
+              </button>
+            </div>
+          </div>
+
+          <!-- Grid dos 3 Canais Ativos -->
+          <div id="yppChannelsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 16px;">
+            <!-- Preenchido dinamicamente via JS -->
+          </div>
+
+          <!-- Compliance Checklist Banner -->
+          <div style="margin-top: 16px; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.25); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">🛡️</span>
+              <span style="font-weight: 700; color: #34D399; font-size: 12px;">GARANTIA DE APROVAÇÃO HUMANA DO YPP:</span>
+            </div>
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; font-size: 11px; color: #CBD5E1;">
+              <span>✓ Narrativa Investigativa Autoral</span>
+              <span>✓ Vozes Neurais Humanas (ElevenLabs)</span>
+              <span>✓ Áudio -14 LUFS EBU R128</span>
+              <span>✓ Dinâmica Ken Burns (Sem Loops Estáticos)</span>
+              <span>✓ Mídia Sintética Declarada</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Shorts Retention & Audience Telemetry (YouTube Studio Sync) -->
+        <div class="studio-card mb-20" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.05) 50%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(16, 185, 129, 0.35); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);">
+          <div class="card-header-bar" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 10px; font-weight: 800; color: #10B981; letter-spacing: 0.12em; text-transform: uppercase;">
+                📡 AUDITORIA DE AUDIÊNCIA EM TEMPO REAL // YOUTUBE STUDIO RETENTION MONITOR
+              </div>
+              <h3 style="font-size: 18px; font-weight: 800; color: #F8FAFC; margin-top: 4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span>🔥 Monitor de Retenção &amp; Tração Algorítmica dos Shorts</span>
+                <span class="kpi-tag emerald" id="retentionMonitorActiveTag" style="font-size: 11px;">4 CANAIS ATIVOS (@aintnohumanoficial • @AViadaDescoberta • @FinancasQuanticasOficial • @BioHackLongevidade)</span>
+              </h3>
+              <p class="card-sub" style="color: #94A3B8; font-size: 12px; margin-top: 4px;">
+                Dados em tempo real extraídos via <strong>YouTube Data API v3</strong> combinados com auditoria de retenção pós-publicação.
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <span id="autoSyncLiveBadge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #10B981; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 11px; font-family: var(--font-mono); display: inline-flex; align-items: center; gap: 6px;">
+                <span class="pulse-dot-green"></span> AUTO-SYNC: ATIVO (1h)
+              </span>
+              <button id="btnRefreshRetention" onclick="window.refreshRetentionMonitor(true)" class="btn-refresh" style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.4); color: #00F5D4; padding: 7px 14px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                <span>⚡</span> Sincronizar c/ YouTube API
+              </button>
+              <button id="btnReworkAllOllama" onclick="window.reworkAllStagnant()" style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%); border: 1px solid rgba(244, 63, 94, 0.4); color: #fda4af; padding: 7px 14px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                <span>🩺</span> Retrabalhar Estagnados (Ollama Local)
+              </button>
+              <button id="btnEditRetention" onclick="window.promptUpdateRetention()" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #10B981; padding: 7px 14px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                <span>✏️</span> Ajustar Retenção AVD
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter Pills for Live Videos -->
+          <div class="retention-filter-bar" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; padding: 8px 12px; background: rgba(15, 23, 42, 0.6); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05); align-items: center;">
+            <span style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Filtrar Cards:</span>
+            <button class="retention-tab-pill active" onclick="window.filterRetentionCards('all')" id="rf_all" style="background: rgba(6, 182, 212, 0.2); border: 1px solid var(--cyan); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">Todos (<span id="rfCountAll">29</span>)</button>
+            <button class="retention-tab-pill" onclick="window.filterRetentionCards('ch1')" id="rf_ch1" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">🥇 A Via da Descoberta (<span id="rfCountCh1">17</span>)</button>
+            <button class="retention-tab-pill" onclick="window.filterRetentionCards('ch2')" id="rf_ch2" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">🥈 Finanças Quânticas (<span id="rfCountCh2">12</span>)</button>
+            <button class="retention-tab-pill" onclick="window.filterRetentionCards('ch3')" id="rf_ch3" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">🥉 Bio Hack Longevidade (<span id="rfCountCh3">0</span>)</button>
+            <button class="retention-tab-pill" onclick="window.filterRetentionCards('ch4')" id="rf_ch4" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">🎵 Ain't No Human (<span id="rfCountCh4">0</span>)</button>
+            <button class="retention-tab-pill" onclick="window.filterRetentionCards('stagnant')" id="rf_stagnant" style="background: transparent; border: 1px solid rgba(244, 63, 94, 0.4); color: #fb7185; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">🚨 Estagnados / 0 Views (<span id="rfCountStagnant">10</span>)</button>
+            <button class="retention-tab-pill" onclick="window.filterRetentionCards('viral')" id="rf_viral" style="background: transparent; border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">🔥 Top Performers (&ge; 500)</button>
+          </div>
+
+          <!-- Cards Grid dos Vídeos ao Vivo -->
+          <div id="retentionCardsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 16px;">
+            <!-- Card 1: Short 1 (Ao Vivo no Feed) -->
+            <div class="video-performance-card">
+              <div class="vp-header">
+                <span class="vp-badge emerald">🚀 AO VIVO NO SHORTS FEED</span>
+                <span class="vp-id">YKMaRwoX424</span>
+              </div>
+              <h4 class="vp-title">
+                250M DE ONDA: A montanha caiu e 2.000 pessoas sumiram em 4 minutos #Shorts
+              </h4>
+              
+              <!-- Retenção Big KPI -->
+              <div class="vp-metric-box">
+                <div class="vp-metric-row">
+                  <span class="vp-metric-label">Retenção Média de Visualização:</span>
+                  <span id="retVal_YKMaRwoX424" class="vp-metric-val accent-emerald">54.2%</span>
+                </div>
+                <div class="vp-progress-track">
+                  <div id="retBar_YKMaRwoX424" class="vp-progress-fill" style="width: 54.2%; background: linear-gradient(90deg, #10b981, #06b6d4);"></div>
+                </div>
+                <div class="vp-progress-meta">
+                  <span>0%</span>
+                  <span style="color: var(--emerald); font-weight: 600;">Threshold Algorítmico: &ge;50% ✓</span>
+                  <span>100%</span>
+                </div>
+              </div>
+
+              <!-- Mini Stats Grid -->
+              <div class="vp-stats-grid">
+                <div class="vp-stat-item">
+                  <div class="lbl">Views Reais</div>
+                  <strong id="retViews_YKMaRwoX424" class="accent-cyan">1.276</strong>
+                </div>
+                <div class="vp-stat-item">
+                  <div class="lbl">Curtidas</div>
+                  <strong id="retLikes_YKMaRwoX424" class="accent-amber">39 👍 (3.1%)</strong>
+                </div>
+                <div class="vp-stat-item">
+                  <div class="lbl">Duração Média</div>
+                  <strong id="retAvd_YKMaRwoX424">20.4s / 37.6s</strong>
+                </div>
+              </div>
+
+              <!-- Curva de Retenção dos 3 Blocos -->
+              <div class="vp-curve-box">
+                <div style="font-weight: 600; color: var(--emerald); margin-bottom: 3px;">📊 Curva de Retenção no Feed:</div>
+                <div style="display: flex; justify-content: space-between; font-size: 10px;">
+                  <span>🪝 Hook (0-5s): <strong>92% retidos</strong></span>
+                  <span>⚙️ Núcleo (5-25s): <strong>68% retidos</strong></span>
+                  <span>🏁 Final (25-37s): <strong>52% retidos</strong></span>
+                </div>
+              </div>
+
+              <div class="vp-footer">
+                <span class="vp-status-text accent-emerald">● EM EXPANSÃO NO SHORTS FEED</span>
+                <a href="https://www.youtube.com/shorts/YKMaRwoX424" target="_blank" rel="noopener" class="vp-link">
+                  Abrir no YouTube ➔
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 2: Short 2 (Recém Publicado) -->
+            <div class="video-performance-card">
+              <div class="vp-header">
+                <span class="vp-badge cyan">⏳ JANELA DE AMOSTRAGEM</span>
+                <span class="vp-id">BMd73ICEHbY</span>
+              </div>
+              <h4 class="vp-title">
+                ELES SABIAM!: Eles sabiam que a montanha ia desabar semanas antes #Shorts
+              </h4>
+              
+              <div class="vp-metric-box">
+                <div class="vp-metric-row">
+                  <span class="vp-metric-label">Status no Algoritmo:</span>
+                  <span class="vp-metric-val accent-cyan" style="font-size: 14px;">Processado 1080p</span>
+                </div>
+                <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4; margin: 0;">
+                  Publicado às 22:28 BRT. Entrará no lote de teste (*seed test*) na manhã deste sábado.
+                </p>
+              </div>
+
+              <div class="vp-stats-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="vp-stat-item">
+                  <div class="lbl">Views Iniciais</div>
+                  <strong id="retViews_BMd73ICEHbY" class="accent-cyan">3 views</strong>
+                </div>
+                <div class="vp-stat-item">
+                  <div class="lbl">Duração Short</div>
+                  <strong>35.4s (Full HD)</strong>
+                </div>
+              </div>
+
+              <div class="vp-curve-box cyan">
+                <div style="font-weight: 600; color: var(--cyan); margin-bottom: 2px;">⚡ Narração &amp; Legendas Hormozi:</div>
+                <div style="font-size: 10px; color: var(--text-muted);">Voz ElevenLabs Adam + legendas sincronizadas.</div>
+              </div>
+
+              <div class="vp-footer">
+                <span class="vp-status-text accent-cyan">● AGUARDANDO DISPARO NO FEED</span>
+                <a href="https://www.youtube.com/shorts/BMd73ICEHbY" target="_blank" rel="noopener" class="vp-link">
+                  Abrir no YouTube ➔
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 3: Vídeo Longo 16:9 -->
+            <div class="video-performance-card">
+              <div class="vp-header">
+                <span class="vp-badge violet">🎬 DOCUMENTÁRIO LONGO 16:9</span>
+                <span class="vp-id">cXHnL5Yjx34</span>
+              </div>
+              <h4 class="vp-title">
+                A História Sobre o Espião da Lua e suas Descobertas
+              </h4>
+              
+              <div class="vp-metric-box">
+                <div class="vp-metric-row">
+                  <span class="vp-metric-label">Estratégia de Funil:</span>
+                  <span class="vp-metric-val accent-violet" style="font-size: 13px;">Alavancado pelos Shorts</span>
+                </div>
+                <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4; margin: 0;">
+                  Vídeo longo Master (Doc 16:9) com a nova <strong>Thumbnail Cinematográfica</strong> aplicada.
+                </p>
+              </div>
+
+              <div class="vp-stats-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="vp-stat-item">
+                  <div class="lbl">Qualidade</div>
+                  <strong class="accent-violet">1080p Full HD</strong>
+                </div>
+                <div class="vp-stat-item">
+                  <div class="lbl">Thumbnail</div>
+                  <strong class="accent-emerald">Padrão Cinema ✓</strong>
+                </div>
+              </div>
+
+              <div class="vp-curve-box violet">
+                <div style="font-weight: 600; color: var(--violet); margin-bottom: 2px;">🔗 Vídeo Relacionado Ativo:</div>
+                <div style="font-size: 10px; color: var(--text-muted);">Shorts 1 e 2 possuem link direto no YouTube Studio apontando para este doc.</div>
+              </div>
+
+              <div class="vp-footer">
+                <span class="vp-status-text accent-violet">● DOCUMENTÁRIO PÚBLICO</span>
+                <a href="https://www.youtube.com/watch?v=cXHnL5Yjx34" target="_blank" rel="noopener" class="vp-link" style="color: var(--violet);">
+                  Assistir no YouTube ➔
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row (Chart.js) -->
+        <div class="analytics-charts-grid">
+          <div class="studio-card chart-card">
+            <div class="card-header-bar">
+              <div>
+                <h3>Tração e Visualizações Acumuladas — Canais Ativos do Portfólio</h3>
+                <p class="card-sub">Crescimento consolidado de vídeos longos (16:9) e funil de Shorts (9:16).</p>
+              </div>
+              <span class="kpi-tag cyan">+312% Tração Orgânica</span>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="channelGrowthChart"></canvas>
+            </div>
+          </div>
+
+          <div class="studio-card chart-card">
+            <div class="card-header-bar">
+              <div>
+                <h3>FinOps: Custo Real de API vs. Receita AdSense Estimada ($ USD)</h3>
+                <p class="card-sub">Unit economics por canal: custo de IA (Gemini + ElevenLabs) vs. retorno com base no RPM.</p>
+              </div>
+              <span class="kpi-tag emerald">Retorno Operacional Positivo</span>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="finopsRoiChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Split: PPPS Video Performance Table + Interactive FinOps Calculator -->
+        <div class="analytics-bottom-grid mt-20">
+          <!-- Post-Publish Performance Score (PPPS) Table -->
+          <div class="studio-card">
+            <div class="card-header-bar">
+              <div>
+                <h3>Vídeos Publicados &amp; Post-Publish Performance Score (PPPS 0–100)</h3>
+                <p class="card-sub">Métrica composta por CTR (&ge;8%), Retenção 30s (&ge;70%), AVD (&ge;45%) e VPH nas primeiras 48h.</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="studio-table">
+                <thead>
+                  <tr>
+                    <th>Canal</th>
+                    <th>Vídeo Publicado (16:9 + Short 9:16)</th>
+                    <th>CTR</th>
+                    <th>Retenção / AVD</th>
+                    <th>VPH (48h)</th>
+                    <th>PPPS (0-100)</th>
+                    <th>Receita Est.</th>
+                  </tr>
+                </thead>
+                <tbody id="pppsTableBody">
+                  <!-- Populated by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- FinOps Interactive Unit Economics & API Cost Breakdown -->
+          <div class="studio-card finops-panel-card">
+            <div class="card-header-bar">
+              <div>
+                <h3>Calculadora FinOps &amp; Unit Economics</h3>
+                <p class="card-sub">Custo exato de API por pacote (Longo 16:9 + Short 9:16) vs. AdSense.</p>
+              </div>
+            </div>
+
+            <div class="finops-unit-breakdown">
+              <div class="unit-row">
+                <span>🧠 Gemini 2.5 Pro/Flash (Transcriação + SEO + Gancho)</span>
+                <strong class="mono">$0.018 / job</strong>
+              </div>
+              <div class="unit-row">
+                <span>🎙️ ElevenLabs Turbo v2.5 (Narração Neural ~9.5 min)</span>
+                <strong class="mono">$0.240 / job</strong>
+              </div>
+              <div class="unit-row">
+                <span>🎬 FFmpeg + Demucs + PySceneDetect (GPU Local)</span>
+                <strong class="mono accent-emerald">$0.000 / job</strong>
+              </div>
+              <div class="unit-row total">
+                <span>CUSTO TOTAL POR PACOTE (16:9 + SHORT 9:16)</span>
+                <strong class="mono accent-cyan">$0.258 USD</strong>
+              </div>
+            </div>
+
+            <!-- Interactive FinOps Sliders -->
+            <div class="finops-simulator-controls">
+              <div class="sim-slider-group">
+                <div class="sim-label-row">
+                  <label for="simVideosPerMonth">Pacotes (16:9 + 9:16) / Mês nos 3 Canais:</label>
+                  <strong id="simVideosVal" class="mono accent-cyan">60 pacotes</strong>
+                </div>
+                <input type="range" id="simVideosPerMonth" min="15" max="180" step="5" value="60" />
+              </div>
+
+              <div class="sim-slider-group">
+                <div class="sim-label-row">
+                  <label for="simAvgViews">Média de Views Monetizadas por Pacote:</label>
+                  <strong id="simViewsVal" class="mono accent-emerald">12,000 views</strong>
+                </div>
+                <input type="range" id="simAvgViews" min="2000" max="100000" step="2000" value="12000" />
+              </div>
+
+              <div class="sim-slider-group">
+                <div class="sim-label-row">
+                  <label for="simAvgRpm">RPM Médio Ponderado dos Top 3 Nichos ($ USD):</label>
+                  <strong id="simRpmVal" class="mono accent-violet">$8.90</strong>
+                </div>
+                <input type="range" id="simAvgRpm" min="3.0" max="18.0" step="0.5" value="8.9" />
+              </div>
+            </div>
+
+            <!-- Calculated FinOps Output Boxes -->
+            <div class="finops-results-grid">
+              <div class="fin-box cost">
+                <span class="f-label">Custo Total API (Mês)</span>
+                <strong id="finCalcApiCost" class="f-val">$15.48</strong>
+                <small id="finCalcApiSplit">Gemini: $1.08 • ElevenLabs: $14.40</small>
+              </div>
+              <div class="fin-box rev">
+                <span class="f-label">Receita AdSense Estimada</span>
+                <strong id="finCalcAdsense" class="f-val accent-emerald">$6,408.00</strong>
+                <small>720K views monetizadas</small>
+              </div>
+              <div class="fin-box profit">
+                <span class="f-label">Lucro Líquido &amp; ROI API</span>
+                <strong id="finCalcProfit" class="f-val accent-cyan">+$6,392.52</strong>
+                <small id="finCalcRoiMultiplier">ROI sobre Custo de IA: 413.9x</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           PAINEL 6: API CONTROL CENTER & MOTORES LOCAIS
+           =================================================================== -->
+      <section id="panel-apis" class="studio-panel" role="tabpanel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-eyebrow">GERENCIAMENTO DE CANAIS, CHAVES, QUOTAS, PERFIS DE VOZ &amp; CIRCUIT BREAKER // /api/settings/apis</div>
+            <h2>🔑 Controle de Canais do YouTube, APIs &amp; Motores</h2>
+            <p class="panel-description">
+              Configure aqui os <strong>Seus 3 Canais do YouTube</strong> (Nome, <code>@Handle</code>, Channel ID, Idioma, Nicho e OAuth2), além das chaves e modelos da <strong>Google Gemini API</strong>, <strong>ElevenLabs TTS Pago</strong> e <strong>Pexels API</strong>.
+            </p>
+          </div>
+          <div class="panel-actions">
+            <button id="btnTestAllApis" class="btn-neon-cyan">
+              <span>🩺 Testar Todas as APIs &amp; Latência</span>
+            </button>
+            <button id="btnSaveAllApis" class="btn-neon-primary">
+              <span>💾 Salvar Canais &amp; APIs</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- FULL-WIDTH CARD: CONFIGURAÇÃO DIRETA DOS SEUS 3 CANAIS DO YOUTUBE -->
+        <div class="studio-card circuit-breaker-card" style="margin-bottom: 18px; border-color: rgba(6, 182, 212, 0.55);">
+          <div class="card-header-bar">
+            <div>
+              <div class="panel-eyebrow">PORTFÓLIO MULTI-CANAL // CONFIGURAÇÃO EDITÁVEL EM TEMPO REAL</div>
+              <h3>📺 Configurar Meus 3 Canais do YouTube (Top 3 Nichos Alavancados)</h3>
+              <p class="card-sub">Edite abaixo o Nome, <code>@Handle</code>, Idioma de Publicação, Nicho, Voice ID ElevenLabs e ID/OAuth2 de cada um dos seus 3 canais e clique em <strong>Salvar Meus 3 Canais</strong>.</p>
+            </div>
+            <button type="button" id="btnSaveChannelsQuick" class="btn-neon-primary">
+              <span>💾 Salvar Meus 3 Canais</span>
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="studio-table">
+              <thead>
+                <tr>
+                  <th style="width: 70px;">Canal</th>
+                  <th>Nome do Seu Canal</th>
+                  <th>Handle (@ do YouTube)</th>
+                  <th>Nicho / Posicionamento</th>
+                  <th style="width: 110px;">Idioma Alvo</th>
+                  <th>Channel ID (UC...) / Arquivo OAuth2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="nos-badge-large">🥇 #1</span></td>
+                  <td><input type="text" id="ytNameCh1" class="studio-input" value="A Via da Descoberta" placeholder="Nome do Canal 1" /></td>
+                  <td><input type="text" id="ytHandleCh1" class="studio-input mono" value="@AViadaDescoberta" placeholder="@SeuCanal1" /></td>
+                  <td><input type="text" id="ytNicheCh1" class="studio-input" value="Mistérios, Ciência, História & Descobertas" placeholder="Nicho do Canal 1" /></td>
+                  <td>
+                    <select id="ytLangCh1" class="studio-select mono">
+                      <option value="pt-BR" selected>🇧🇷 pt-BR</option>
+                      <option value="en-US">🇺🇸 en-US</option>
+                      <option value="es-MX">🇪🇸 es-MX</option>
+                    </select>
+                  </td>
+                  <td><input type="text" id="ytOauthCh1" class="studio-input mono" value="UC8RJWr3b2pKtnU1wOhV_bDQ" placeholder="UC... ou client_secret_ch1.json" /></td>
+                </tr>
+                <tr>
+                  <td><span class="nos-badge-large">🥈 #2</span></td>
+                  <td><input type="text" id="ytNameCh2" class="studio-input" value="Finanças Quânticas" placeholder="Nome do Canal 2" /></td>
+                  <td><input type="text" id="ytHandleCh2" class="studio-input mono" value="@FinancasQuanticas" placeholder="@FinancasQuanticas" /></td>
+                  <td><input type="text" id="ytNicheCh2" class="studio-input" value="Crimes Cibernéticos, Fraudes & IA" placeholder="Nicho do Canal 2" /></td>
+                  <td>
+                    <select id="ytLangCh2" class="studio-select mono">
+                      <option value="pt-BR" selected>🇧🇷 pt-BR</option>
+                      <option value="en-US">🇺🇸 en-US</option>
+                      <option value="es-MX">🇪🇸 es-MX</option>
+                    </select>
+                  </td>
+                  <td><input type="text" id="ytOauthCh2" class="studio-input mono" value="client_secret_ch2.json" placeholder="UC... ou client_secret_ch2.json" /></td>
+                </tr>
+                <tr>
+                  <td><span class="nos-badge-large">🥉 #3</span></td>
+                  <td><input type="text" id="ytNameCh3" class="studio-input" value="Bio Hack Longevidade" placeholder="Nome do Canal 3" /></td>
+                  <td><input type="text" id="ytHandleCh3" class="studio-input mono" value="@BioHackLongevidade" placeholder="@BioHackLongevidade" /></td>
+                  <td><input type="text" id="ytNicheCh3" class="studio-input" value="Neurociência Aplicada, Biohacking &amp; Longevidade Ativa" placeholder="Nicho do Canal 3" /></td>
+                  <td>
+                    <select id="ytLangCh3" class="studio-select mono">
+                      <option value="pt-BR" selected>🇧🇷 pt-BR</option>
+                      <option value="en-US">🇺🇸 en-US</option>
+                      <option value="es-MX">🇪🇸 es-MX</option>
+                    </select>
+                  </td>
+                  <td><input type="text" id="ytOauthCh3" class="studio-input mono" value="UCIjEnT4adPYVyi0UlrCITBA" placeholder="UCIjEnT4adPYVyi0UlrCITBA" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2x2 Grid of Cloud & Local API Control Cards -->
+        <div class="api-control-grid">
+
+          <!-- CARD 1: GOOGLE GEMINI API (google-genai & Imagen 3) -->
+          <div class="studio-card api-provider-card">
+            <div class="api-card-top">
+              <div class="api-title-cluster">
+                <span class="api-icon-box cyan">🧠</span>
+                <div>
+                  <h3>Google Gemini API &amp; Imagen 3</h3>
+                  <span class="card-sub">SDK Oficial <code>google-genai</code> • Roteiro, SEO, Gancho &amp; Thumbnails</span>
+                </div>
+              </div>
+              <div class="api-badges-right">
+                <span id="geminiStatusBadge" class="status-badge completed">ATIVA / CONECTADA</span>
+                <span id="geminiLatencyBadge" class="mono-badge">138 ms</span>
+              </div>
+            </div>
+
+            <div class="api-form-group mt-16">
+              <label for="apiGeminiKey">CHAVE <code>GEMINI_API_KEY</code> (Mascarada com Segurança):</label>
+              <div class="secret-input-row">
+                <input type="password" id="apiGeminiKey" class="studio-input mono" value="AIzaSyD9_DarkStudioPro_LiveKey_9821x" autocomplete="off" />
+                <button type="button" class="btn-mini" data-toggle-secret="apiGeminiKey">👁️ Mostrar</button>
+              </div>
+            </div>
+
+            <div class="api-two-col mt-16">
+              <div class="api-form-group">
+                <label for="apiGeminiTextModel">MODELO DE ROTEIRO &amp; TRANSCRIAÇÃO:</label>
+                <select id="apiGeminiTextModel" class="studio-select">
+                  <option value="gemini-2.5-flash" selected>gemini-2.5-flash (Ultra-Rápido • $0.018/job)</option>
+                  <option value="gemini-2.5-pro">gemini-2.5-pro (Raciocínio Profundo Documental)</option>
+                </select>
+              </div>
+              <div class="api-form-group">
+                <label for="apiGeminiImageModel">MODELO DE THUMBNAIL &amp; B-ROLL:</label>
+                <select id="apiGeminiImageModel" class="studio-select">
+                  <option value="imagen-3.0-generate-002" selected>imagen-3.0-generate-002 (High-CTR 16:9 &amp; 9:16)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="api-telemetry-strip mt-16">
+              <div class="t-cell">
+                <span>TOKENS INPUT (MÊS)</span>
+                <strong id="geminiTokensIn" class="mono accent-cyan">1,420,800 tok</strong>
+              </div>
+              <div class="t-cell">
+                <span>TOKENS OUTPUT (MÊS)</span>
+                <strong id="geminiTokensOut" class="mono accent-emerald">486,200 tok</strong>
+              </div>
+              <div class="t-cell">
+                <span>CUSTO ACUMULADO</span>
+                <strong id="geminiCostMonth" class="mono">$1.08 USD</strong>
+              </div>
+            </div>
+
+            <div class="api-card-footer mt-16">
+              <span id="geminiTestFeedback" class="api-feedback-text">✓ Handshake validado com Google GenAI SDK</span>
+              <button type="button" id="btnTestGemini" class="btn-neon-cyan">⚡ Testar Gemini API</button>
+            </div>
+          </div>
+
+          <!-- CARD 2: ELEVENLABS API (TTS MULTI-CANAL) -->
+          <div class="studio-card api-provider-card">
+            <div class="api-card-top">
+              <div class="api-title-cluster">
+                <span class="api-icon-box violet">🎙️</span>
+                <div>
+                  <h3>ElevenLabs API (TTS Neural Multi-Canal)</h3>
+                  <span class="card-sub">Síntese Neural PT-BR • Timestamps Palavra-a-Palavra • Master -14 LUFS</span>
+                </div>
+              </div>
+              <div class="api-badges-right">
+                <span id="elevenStatusBadge" class="status-badge completed">ATIVA / QUOTA OK</span>
+                <span id="elevenLatencyBadge" class="mono-badge">184 ms</span>
+              </div>
+            </div>
+
+            <div class="api-two-col mt-16">
+              <div class="api-form-group">
+                <label for="apiElevenKey">CHAVE <code>ELEVENLABS_API_KEY</code>:</label>
+                <div class="secret-input-row">
+                  <input type="password" id="apiElevenKey" class="studio-input mono" value="sk_eleven_94f8a21c07d3e5b6a812_studio" autocomplete="off" />
+                  <button type="button" class="btn-mini" data-toggle-secret="apiElevenKey">👁️ Mostrar</button>
+                </div>
+              </div>
+              <div class="api-form-group">
+                <label for="apiElevenModel">MODELO ACÚSTICO NEURAL:</label>
+                <select id="apiElevenModel" class="studio-select">
+                  <option value="eleven_multilingual_v2" selected>eleven_multilingual_v2 (Máxima Emoção Documental)</option>
+                  <option value="eleven_flash_v2_5">eleven_flash_v2_5 (Baixa Latência &amp; Economia 50%)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Quota Progress Bar -->
+            <div class="quota-meter-box mt-16">
+              <div class="quota-top-row">
+                <span>QUOTA MENSAL DE CARACTERES ELEVENLABS</span>
+                <strong id="elevenQuotaLabel" class="mono accent-emerald">42,850 / 100,000 chars (42.8%)</strong>
+              </div>
+              <div class="live-progress-track">
+                <div id="elevenQuotaBar" class="live-progress-fill" style="width: 42.85%;"></div>
+              </div>
+            </div>
+
+            <!-- Voice Profiles for Top 3 Channels -->
+            <div class="voice-profiles-table-wrap mt-16">
+              <div class="voice-table-title">PERFIS DE VOZ EXCLUSIVOS DOS TOP 3 CANAIS (ANTI-REPETIÇÃO YOUTUBE):</div>
+              <table class="studio-table compact">
+                <thead>
+                  <tr>
+                    <th>Canal do Portfólio</th>
+                    <th>Voice ID ElevenLabs</th>
+                    <th>Stability</th>
+                    <th>Similarity Boost</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>🥇 #1 A Via da Descoberta</strong></td>
+                    <td><input type="text" id="voiceIdCh1" class="studio-input-sm mono" value="pNInz6obpgDQGcFmaJgB" /></td>
+                    <td><input type="number" id="voiceStabCh1" class="studio-input-sm mono" step="0.05" min="0" max="1" value="0.42" /></td>
+                    <td><input type="number" id="voiceSimCh1" class="studio-input-sm mono" step="0.05" min="0" max="1" value="0.85" /></td>
+                  </tr>
+                  <tr>
+                    <td><strong>🥈 #2 Finanças Quânticas</strong></td>
+                    <td><input type="text" id="voiceIdCh2" class="studio-input-sm mono" value="ErXwobaYiN019PkySvjV" /></td>
+                    <td><input type="number" id="voiceStabCh2" class="studio-input-sm mono" step="0.05" min="0" max="1" value="0.48" /></td>
+                    <td><input type="number" id="voiceSimCh2" class="studio-input-sm mono" step="0.05" min="0" max="1" value="0.82" /></td>
+                  </tr>
+                  <tr>
+                    <td><strong>🥉 #3 Bio Hack Longevidade</strong></td>
+                    <td><input type="text" id="voiceIdCh3" class="studio-input-sm mono" value="VR6AewLTigWG4xSOukaG" /></td>
+                    <td><input type="number" id="voiceStabCh3" class="studio-input-sm mono" step="0.05" min="0" max="1" value="0.50" /></td>
+                    <td><input type="number" id="voiceSimCh3" class="studio-input-sm mono" step="0.05" min="0" max="1" value="0.88" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="api-card-footer mt-16">
+              <span id="elevenTestFeedback" class="api-feedback-text">✓ Vozes Neurais sincronizadas e prontas</span>
+              <button type="button" id="btnTestEleven" class="btn-neon-cyan">🎙️ Testar Voz &amp; Quota</button>
+            </div>
+          </div>
+
+          <!-- CARD 3: YOUTUBE DATA API v3 & OAUTH2 (TOP 3 CANAIS) -->
+          <div class="studio-card api-provider-card">
+            <div class="api-card-top">
+              <div class="api-title-cluster">
+                <span class="api-icon-box emerald">📺</span>
+                <div>
+                  <h3>YouTube Data API v3 &amp; OAuth2 Publisher</h3>
+                  <span class="card-sub">Descoberta de Outliers, Analytics Sync &amp; Upload Agendado Multi-Canal</span>
+                </div>
+              </div>
+              <div class="api-badges-right">
+                <span id="ytStatusBadge" class="status-badge completed">3 CANAIS ATIVOS (PORTFÓLIO COMPLETO)</span>
+                <span id="ytLatencyBadge" class="mono-badge">92 ms</span>
+              </div>
+            </div>
+
+            <div class="api-form-group mt-16">
+              <label for="apiYoutubeKey">CHAVE <code>YOUTUBE_API_KEY</code> (Data API v3 Discovery):</label>
+              <div class="secret-input-row">
+                <input type="password" id="apiYoutubeKey" class="studio-input mono" value="AIzaSyB7_YouTubeDataV3_OutlierRadar_4410" autocomplete="off" />
+                <button type="button" class="btn-mini" data-toggle-secret="apiYoutubeKey">👁️ Mostrar</button>
+              </div>
+            </div>
+
+            <!-- YouTube Daily Quota Units -->
+            <div class="quota-meter-box mt-16">
+              <div class="quota-top-row">
+                <span>CONSUMO DIÁRIO DE UNIDADES (YOUTUBE DATA API v3)</span>
+                <strong id="ytQuotaLabel" class="mono accent-cyan">2,480 / 10,000 units (24.8%)</strong>
+              </div>
+              <div class="live-progress-track">
+                <div id="ytQuotaBar" class="live-progress-fill" style="width: 24.8%;"></div>
+              </div>
+            </div>
+
+            <!-- Dynamic Summary of Configured Channels in Card 3 -->
+            <div class="oauth-channels-list mt-16" id="ytCardChannelsSummary">
+              <div class="oauth-row">
+                <div>
+                  <strong id="ytCardLabelCh1">🥇 Canal #1: A Via da Descoberta (@AViadaDescoberta)</strong>
+                  <small>ID: <code>UC8RJWr3b2pKtnU1wOhV_bDQ</code> • <code>youtube.upload</code>, <code>yt-analytics.readonly</code></small>
+                </div>
+                <span class="kpi-tag emerald">✓ OAUTH2 ATIVO</span>
+              </div>
+              <div class="oauth-row">
+                <div>
+                  <strong id="ytCardLabelCh2">🥈 Canal #2: Finanças Quânticas (@FinancasQuanticasOficial)</strong>
+                  <small>ID: <code>UCE6Ch6nhxI81Z6ILQIw23_Q</code> • <code>youtube.upload</code>, <code>yt-analytics.readonly</code></small>
+                </div>
+                <span class="kpi-tag emerald">✓ OAUTH2 ATIVO</span>
+              </div>
+              <div class="oauth-row">
+                <div>
+                  <strong id="ytCardLabelCh3">🥉 Canal #3: Bio Hack Longevidade (<a href="https://www.youtube.com/channel/UCIjEnT4adPYVyi0UlrCITBA" target="_blank" rel="noopener" style="color:var(--cyan);">@BioHackLongevidade</a>)</strong>
+                  <small>ID: <code>UCIjEnT4adPYVyi0UlrCITBA</code> • <code>youtube.upload</code>, <code>yt-analytics.readonly</code></small>
+                </div>
+                <span class="kpi-tag emerald">✓ CANAL ATIVO</span>
+              </div>
+            </div>
+
+            <div class="api-card-footer mt-16">
+              <span id="ytTestFeedback" class="api-feedback-text">✓ Canais, quota diária e OAuth2 operacionais</span>
+              <button type="button" id="btnTestYoutube" class="btn-neon-cyan">📡 Testar YouTube API</button>
+            </div>
+          </div>
+
+          <!-- CARD 4: PEXELS API & MOTORES LOCAIS GRATUITOS -->
+          <div class="studio-card api-provider-card">
+            <div class="api-card-top">
+              <div class="api-title-cluster">
+                <span class="api-icon-box amber">⚙️</span>
+                <div>
+                  <h3>Pexels B-Roll API &amp; Motores Locais ($0 Cost)</h3>
+                  <span class="card-sub">Diagnóstico de Hardware &amp; Motores Open-Source de Renderização</span>
+                </div>
+              </div>
+              <div class="api-badges-right">
+                <span id="localEnginesBadge" class="status-badge completed">5/5 MOTORES ONLINE</span>
+                <span id="pexelsLatencyBadge" class="mono-badge">64 ms</span>
+              </div>
+            </div>
+
+            <div class="api-form-group mt-16">
+              <label for="apiPexelsKey">CHAVE <code>PEXELS_API_KEY</code> (Stock B-Roll 4K &amp; Vertical 9:16):</label>
+              <div class="secret-input-row">
+                <input type="password" id="apiPexelsKey" class="studio-input mono" value="563492ad6f91700001000001_pexels_studio" autocomplete="off" />
+                <button type="button" class="btn-mini" data-toggle-secret="apiPexelsKey">👁️ Mostrar</button>
+              </div>
+            </div>
+
+            <!-- Local Open-Source Engines Health Matrix -->
+            <div class="local-engines-list mt-16">
+              <div class="engine-row">
+                <span>🎬 <strong>FFmpeg NVENC / CPU Master</strong> (16:9 + 9:16, -14 LUFS, LUT, Speed 1.04x)</span>
+                <span class="kpi-tag emerald">ONLINE • $0.00</span>
+              </div>
+              <div class="engine-row">
+                <span>🗣️ <strong>Faster-Whisper ASR</strong> (Alinhamento Word-Level p/ Legendas Hormozi)</span>
+                <span class="kpi-tag emerald">ONLINE • $0.00</span>
+              </div>
+              <div class="engine-row">
+                <span>🎵 <strong>Demucs v4 Audio Separator</strong> (Isolamento Vocal vs. BGM/SFX)</span>
+                <span class="kpi-tag emerald">ONLINE • $0.00</span>
+              </div>
+              <div class="engine-row">
+                <span>📥 <strong>yt-dlp Extractor</strong> (Stream 4K + Curva Heatmap Most Replayed)</span>
+                <span class="kpi-tag emerald">ONLINE • $0.00</span>
+              </div>
+              <div class="engine-row">
+                <span>👁️ <strong>OpenCV + MediaPipe</strong> (Smart Crop 9:16 com Rastreamento de Saliência)</span>
+                <span class="kpi-tag emerald">ONLINE • $0.00</span>
+              </div>
+            </div>
+
+            <div class="api-card-footer mt-16">
+              <span id="localTestFeedback" class="api-feedback-text">✓ Stack local 100% operacional (Custo marginal $0)</span>
+              <button type="button" id="btnTestLocalEngines" class="btn-neon-cyan">🔧 Diagnosticar Motores</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- FINOPS CIRCUIT BREAKER & SHA-256 CACHE ENGINE -->
+        <div class="studio-card circuit-breaker-card mt-20">
+          <div class="card-header-bar">
+            <div>
+              <div class="panel-eyebrow">PROTEÇÃO FINANCEIRA AUTOMÁTICA // FINOPS CIRCUIT BREAKER</div>
+              <h3>🛡️ Trava de Segurança Financeira &amp; Cache Determinístico SHA-256</h3>
+              <p class="card-sub">Impede gastos inesperados de API, pausa jobs automaticamente ao atingir limites e reutiliza sínteses idênticas via hash SHA-256.</p>
+            </div>
+            <span id="circuitBreakerStatusBadge" class="nos-badge-large">CIRCUIT BREAKER ARMADO &amp; PROTEGIDO</span>
+          </div>
+
+          <div class="circuit-breaker-grid">
+            <div class="cb-control-box">
+              <label for="finopsDailyCapUsd">LIMITE MÁXIMO DE GASTO DIÁRIO ($ USD):</label>
+              <div class="cb-input-wrap">
+                <span class="cb-prefix">$</span>
+                <input type="number" id="finopsDailyCapUsd" class="studio-input mono" step="0.50" min="1.00" max="100.00" value="5.00" />
+                <span class="cb-suffix">/ dia (~19 vídeos)</span>
+              </div>
+              <small>Gasto hoje: <strong class="accent-emerald">$0.78 USD (15.6% do limite)</strong></small>
+            </div>
+
+            <div class="cb-control-box">
+              <label for="finopsMonthlyCapUsd">LIMITE MÁXIMO DE GASTO MENSAL ($ USD):</label>
+              <div class="cb-input-wrap">
+                <span class="cb-prefix">$</span>
+                <input type="number" id="finopsMonthlyCapUsd" class="studio-input mono" step="5.00" min="10.00" max="500.00" value="45.00" />
+                <span class="cb-suffix">/ mês (~174 vídeos)</span>
+              </div>
+              <small>Gasto no mês: <strong class="accent-cyan">$15.48 USD (34.4% do limite)</strong></small>
+            </div>
+
+            <div class="cb-toggle-box">
+              <label class="cb-checkbox-label">
+                <input type="checkbox" id="finopsAutoPause90" checked />
+                <span><strong>Auto-Pause em 90% da Quota ElevenLabs</strong></span>
+              </label>
+              <small>Pausa novas sínteses vocais automaticamente caso a quota mensal atinja 90.000 caracteres.</small>
+            </div>
+
+            <div class="cb-toggle-box">
+              <label class="cb-checkbox-label">
+                <input type="checkbox" id="finopsSha256Cache" checked />
+                <span><strong>Cache Determinístico SHA-256 (Áudio &amp; Prompts)</strong></span>
+              </label>
+              <small>Evita chamadas duplicadas para trechos já processados. Economia atual: <strong class="accent-emerald">34.2% de tokens/chars</strong>.</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           PAINEL 7: CENTRAL DO CANAL EXCLUSIVO (MULTI-CANAL TOP 3)
+           Status, Postagens, Temas, Shorts, Médios, Longos & YouTube Links
+           =================================================================== -->
+      <section id="panel-channel-hub" class="studio-panel" role="tabpanel">
+
+        <!-- Seletor de Abas dos 3 Canais no Hub -->
+        <div id="hubChannelSelectorBar" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 16px;">
+          <button type="button" id="hubTabCh1" onclick="window.openChannelHub(1)" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-radius: 10px; background: rgba(6, 182, 212, 0.18); border: 1px solid #06b6d4; color: #fff; cursor: pointer; text-align: left;">
+            <div>
+              <div style="font-size: 10px; font-weight: 800; color: #06b6d4; font-family: var(--font-mono);">SLOT #1 • MISTÉRIOS &amp; CIÊNCIA</div>
+              <div style="font-size: 14px; font-weight: 800; margin-top: 2px;">🥇 A Via da Descoberta</div>
+              <div style="font-size: 11px; color: #94a3b8; font-family: var(--font-mono);">@AViadaDescoberta • UC8RJWr3b2pKtnU1wOhV_bDQ</div>
+            </div>
+            <span style="font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">ATIVO</span>
+          </button>
+
+          <button type="button" id="hubTabCh2" onclick="window.openChannelHub(2)" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-radius: 10px; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12); color: #cbd5e1; cursor: pointer; text-align: left;">
+            <div>
+              <div style="font-size: 10px; font-weight: 800; color: #10b981; font-family: var(--font-mono);">SLOT #2 • FINANÇAS QUANTITATIVAS</div>
+              <div style="font-size: 14px; font-weight: 800; margin-top: 2px;">🥈 Finanças Quânticas</div>
+              <div style="font-size: 11px; color: #94a3b8; font-family: var(--font-mono);">@FinancasQuanticasOficial • UCE6Ch6nhxI81Z6ILQIw23_Q</div>
+            </div>
+            <span style="font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">ATIVO</span>
+          </button>
+
+          <button type="button" id="hubTabCh3" onclick="window.openChannelHub(3)" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-radius: 10px; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12); color: #cbd5e1; cursor: pointer; text-align: left;">
+            <div>
+              <div style="font-size: 10px; font-weight: 800; color: #00f5d4; font-family: var(--font-mono);">SLOT #3 • NEUROCIÊNCIA &amp; LONGEVIDADE</div>
+              <div style="font-size: 14px; font-weight: 800; margin-top: 2px;">🥉 Bio Hack Longevidade</div>
+              <div style="font-size: 11px; color: #94a3b8; font-family: var(--font-mono);">@BioHackLongevidade • UCIjEnT4adPYVyi0UlrCITBA</div>
+            </div>
+            <span style="font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(0, 245, 212, 0.2); color: #00f5d4; border: 1px solid rgba(0, 245, 212, 0.45);">ATIVO</span>
+          </button>
+
+          <button type="button" id="hubTabCh4" onclick="window.openChannelHub(4)" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-radius: 10px; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12); color: #cbd5e1; cursor: pointer; text-align: left;">
+            <div>
+              <div style="font-size: 10px; font-weight: 800; color: #ec4899; font-family: var(--font-mono);">SLOT #4 • CYBER-R&amp;B &amp; MUSIC</div>
+              <div style="font-size: 14px; font-weight: 800; margin-top: 2px;">🎵 Ain't No Human</div>
+              <div style="font-size: 11px; color: #94a3b8; font-family: var(--font-mono);">@aintnohumanoficial • UCbO67ez7TKOJ8C_kpUF4t5Q</div>
+            </div>
+            <span style="font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(236, 72, 153, 0.2); color: #ec4899; border: 1px solid rgba(236, 72, 153, 0.45);">ATIVO</span>
+          </button>
+        </div>
+        
+        <!-- Header Banner do Canal -->
+        <div class="channel-hub-banner">
+          <div class="channel-hub-left">
+            <div class="channel-hub-avatar">🏛️</div>
+            <div class="channel-hub-info">
+              <h2><span id="hubChannelName">A Via da Descoberta</span> <span class="accent-cyan mono" id="hubChannelHandle">@AViadaDescoberta</span></h2>
+              <div class="channel-hub-sub">
+                <span>ID YouTube: <strong class="mono" id="hubYoutubeId">UC8RJWr3b2pKtnU1wOhV_bDQ</strong></span>
+                <span>•</span>
+                <span>Nicho: <strong id="hubChannelNiche">Mistérios, Ciência &amp; Descobertas Históricas</strong></span>
+                <span>•</span>
+                <span>Voz: <strong id="hubChannelVoice">Marcus Vance (Deep Baritone)</strong></span>
+              </div>
+              <div class="channel-hub-badges">
+                <span class="ch-badge online"><span class="pulse-dot-green"></span> CONECTADO &amp; AUTORIZADO (OAuth2)</span>
+                <span class="ch-badge public">🌍 VISIBILIDADE: PÚBLICO (public)</span>
+                <span class="ch-badge cadence">🚀 CADÊNCIA DIÁRIA: 5 SHORTS + 1 LONGO</span>
+                <span class="ch-badge niche">🛡️ ANTI-REUSO ATIVO (DeDuplicator)</span>
+              </div>
+            </div>
+          </div>
+          <div class="channel-hub-actions">
+            <a href="https://www.youtube.com/channel/UC8RJWr3b2pKtnU1wOhV_bDQ" target="_blank" rel="noopener" class="btn-yt-live" id="hubBtnYtLive">
+              <span>▶</span> Ver Canal no YouTube
+            </a>
+            <a href="https://studio.youtube.com/channel/UC8RJWr3b2pKtnU1wOhV_bDQ/videos" target="_blank" rel="noopener" class="btn-yt-studio" id="hubBtnYtStudio">
+              <span>⚙️</span> YouTube Studio (Vídeos)
+            </a>
+            <button class="btn-refresh-hub" id="btnRefreshChannelHub">
+              <span>🔄</span> Atualizar Status
+            </button>
+            <button class="btn-refresh-hub" id="btnSyncYouTube" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.4);" title="Auditar em tempo real via YouTube Data API e Feed RSS">
+              <span>⚡</span> Sincronizar c/ YouTube
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Ribbon: Contagem Exata de Produções e Formatos -->
+        <div class="channel-hub-kpis">
+          <div class="ch-kpi-card">
+            <span class="ch-kpi-label">TOTAL PRODUÇÕES DO CANAL</span>
+            <div class="ch-kpi-val"><span id="hubTotalProductions" class="accent-cyan">16</span> <span class="ch-kpi-sub">geradas</span></div>
+            <span class="ch-kpi-sub">Pipeline Dark Studio</span>
+          </div>
+
+          <div class="ch-kpi-card variant-shorts">
+            <span class="ch-kpi-label">📱 SHORTS (9:16 VERTICAL)</span>
+            <div class="ch-kpi-val"><span id="hubShortsCount" style="color: #f472b6;">8</span> <span class="ch-kpi-sub">shorts</span></div>
+            <span class="ch-kpi-sub">35s-45s • Legendas Hormozi</span>
+          </div>
+
+          <div class="ch-kpi-card variant-mini">
+            <span class="ch-kpi-label">⏱️ MÉDIOS / MINI-DOCS (16:9)</span>
+            <div class="ch-kpi-val"><span id="hubMiniDocsCount" class="accent-cyan">1</span> <span class="ch-kpi-sub">mini-doc</span></div>
+            <span class="ch-kpi-sub">3m05s • Vajont (Excluído no YT)</span>
+          </div>
+
+          <div class="ch-kpi-card variant-long">
+            <span class="ch-kpi-label">🎥 LONGOS DEEP-DIVE (16:9)</span>
+            <div class="ch-kpi-val"><span id="hubLongDocsCount" class="accent-violet">7</span> <span class="ch-kpi-sub">longos</span></div>
+            <span class="ch-kpi-sub">8m-12m • Documentário 4K</span>
+          </div>
+
+          <div class="ch-kpi-card variant-published">
+            <span class="ch-kpi-label">🚀 ATIVOS NO YOUTUBE</span>
+            <div class="ch-kpi-val"><span id="hubPublishedCount" class="accent-emerald">1</span> <span class="ch-kpi-sub">ao vivo</span></div>
+            <span class="ch-kpi-sub">Short Público Ativo</span>
+          </div>
+
+          <div class="ch-kpi-card variant-deleted">
+            <span class="ch-kpi-label">🗑️ DELETADOS NO YOUTUBE</span>
+            <div class="ch-kpi-val"><span id="hubDeletedCount" style="color: #f87171;">1</span> <span class="ch-kpi-sub">removido</span></div>
+            <span class="ch-kpi-sub">Médio Excluído pelo Usuário</span>
+          </div>
+        </div>
+
+        <!-- Cadência Diária Programada (Timeline de Hoje) -->
+        <div class="studio-card mt-20">
+          <div class="card-header-bar">
+            <div>
+              <div class="panel-eyebrow">DISTRIBUIÇÃO AUTOMÁTICA DIÁRIA // CRONOGRAMA OFICIAL (HORÁRIO DE BRASÍLIA)</div>
+              <h3>📅 Grade de Postagens Programadas para o Canal (6 Shorts + 1 Longo Diariamente)</h3>
+              <p class="card-sub">Horários otimizados de retenção e audiência no YouTube com validação anti-reuso obrigatória por ciclo.</p>
+            </div>
+            <span class="nos-badge-large" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: #10b981;">AUTOMAÇÃO OPERACIONAL ATIVA</span>
+          </div>
+
+          <div class="cadence-timeline-grid" id="hubCadenceTimelineGrid">
+            <div class="cadence-slot-box">
+              <span class="cadence-slot-time">10:00 BRT</span>
+              <span class="cadence-slot-type" style="color: #f472b6;">📱 Short #1 (Manhã)</span>
+              <small style="color: var(--text-secondary);">Ângulo Curiosidade &amp; Hook Rápido</small>
+              <span class="cadence-slot-status active">PROGRAMADO</span>
+            </div>
+
+            <div class="cadence-slot-box">
+              <span class="cadence-slot-time">13:00 BRT</span>
+              <span class="cadence-slot-type" style="color: #f472b6;">📱 Short #2 (Almoço)</span>
+              <small style="color: var(--text-secondary);">Ângulo O Número Chocante</small>
+              <span class="cadence-slot-status active">PROGRAMADO</span>
+            </div>
+
+            <div class="cadence-slot-box">
+              <span class="cadence-slot-time">16:00 BRT</span>
+              <span class="cadence-slot-type" style="color: #f472b6;">📱 Short #3 (Tarde)</span>
+              <small style="color: var(--text-secondary);">Ângulo O Erro Fatal / Revelação</small>
+              <span class="cadence-slot-status active">PROGRAMADO</span>
+            </div>
+
+            <div class="cadence-slot-box prime-time">
+              <span class="cadence-slot-time" style="color: #fbbf24;">19:00 BRT 👑</span>
+              <span class="cadence-slot-type" style="color: #fbbf24; font-weight: 800;">🎥 Longo 16:9 (Prime Time)</span>
+              <small style="color: #fef3c7;">Mini-Doc / Documentário Completo</small>
+              <span class="cadence-slot-status active" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border-color: #f59e0b;">PRIME TIME VIP</span>
+            </div>
+
+            <div class="cadence-slot-box">
+              <span class="cadence-slot-time">20:30 BRT</span>
+              <span class="cadence-slot-type" style="color: #f472b6;">📱 Short #4 (Noite)</span>
+              <small style="color: var(--text-secondary);">Ângulo Teoria &amp; Mistério</small>
+              <span class="cadence-slot-status active">PROGRAMADO</span>
+            </div>
+
+            <div class="cadence-slot-box">
+              <span class="cadence-slot-time">22:00 BRT</span>
+              <span class="cadence-slot-type" style="color: #f472b6;">📱 Short #5 (Late Night)</span>
+              <small style="color: var(--text-secondary);">Ângulo O Detalhe Esquecido</small>
+              <span class="cadence-slot-status active">PROGRAMADO</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros Rápidos de Produção -->
+        <div class="channel-hub-filters">
+          <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-right: 6px;">FILTRAR CONTEÚDOS:</span>
+          <button class="filter-pill-btn active" data-filter="all">Todos (<span id="filterCountAll">16</span>)</button>
+          <button class="filter-pill-btn" data-filter="shorts">📱 Shorts 9:16 (<span id="filterCountShorts">8</span>)</button>
+          <button class="filter-pill-btn" data-filter="mini">⏱️ Médios / Mini-Docs (<span id="filterCountMini">1</span>)</button>
+          <button class="filter-pill-btn" data-filter="long">🎥 Longos 16:9 (<span id="filterCountLong">7</span>)</button>
+          <button class="filter-pill-btn" data-filter="published">🚀 Ativos no YouTube (<span id="filterCountPublished">1</span>)</button>
+          <button class="filter-pill-btn" data-filter="deleted">🗑️ Deletados no YouTube (<span id="filterCountDeleted">1</span>)</button>
+        </div>
+
+        <!-- Grid de Cards de Produções do Canal -->
+        <div id="channelProductionsGrid" class="channel-productions-grid">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="studioToastContainer" class="toast-container" aria-live="assertive"></div>
+  </div>
+
+  <!-- Application Script -->
+  <script src="/app.js?v=20261021_ch4_band_link_v3"></script>
+</body>
+</html>

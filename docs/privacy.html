@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidade — Dark Studio Platform</title>
+  <style>
+    :root {
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #38BDF8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+    h1 { font-size: 28px; margin-bottom: 8px; color: var(--primary); }
+    .updated { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+    h2 { font-size: 20px; margin-top: 28px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    p, li { font-size: 15px; color: var(--text-muted); margin-bottom: 14px; }
+    ul { margin-left: 24px; margin-bottom: 16px; }
+    li { margin-bottom: 8px; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .callout {
+      background: rgba(56, 189, 248, 0.1);
+      border-left: 4px solid var(--primary);
+      padding: 14px 18px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p { color: #E2E8F0; margin-bottom: 0; }
+    footer { margin-top: 40px; font-size: 13px; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Política de Privacidade</h1>
+    <div class="updated">Última atualização: 28 de Outubro de 2026</div>
+
+    <p>A <strong>Dark Studio Platform</strong> é uma plataforma proprietária de automação de fluxo de trabalho editorial, design documental e publicação programada desenvolvida para gestão de canais no YouTube. Nós valorizamos e respeitamos rigorosamente a privacidade e a segurança dos dados dos usuários.</p>
+
+    <div class="callout">
+      <p><strong>Conformidade Obrigatória com o YouTube:</strong> Ao utilizar a Dark Studio Platform para integrar canais, você concorda expressamente em vincular-se aos <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener">Termos de Serviço do YouTube</a> e à <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidade do Google</a>.</p>
+    </div>
+
+    <h2>1. Uso dos Serviços de API do YouTube</h2>
+    <p>Nossa aplicação utiliza os <strong>YouTube API Services</strong> para viabilizar o envio automatizado e agendado de conteúdos em vídeo, gestão de títulos, tags, miniaturas e leitura de métricas de engajamento dos canais previamente autorizados pelo proprietário.</p>
+
+    <h2>2. Informações e Dados Acessados</h2>
+    <p>A Dark Studio Platform acessa e manipula estritamente os seguintes dados fornecidos por meio do protocolo OAuth 2.0 oficial do Google:</p>
+    <ul>
+      <li><strong>Identificação do Canal:</strong> Título do canal, ID do canal, identificador único (handle) e miniatura para identificação do perfil de publicação.</li>
+      <li><strong>Gerenciamento de Conteúdo de Vídeo:</strong> Capacidade de fazer upload de vídeos pré-renderizados, definir títulos, descrições, tags de categorização e miniaturas (thumbnails).</li>
+      <li><strong>Métricas de Desempenho do Canal:</strong> Estatísticas agregadas públicas (como contagem de inscritos e visualizações) para alimentar os relatórios de retenção e telemetria interna do estúdio.</li>
+    </ul>
+
+    <h2>3. Como os Dados São Utilizados</h2>
+    <p>Todos os dados acessados destinam-se exclusivamente para:</p>
+    <ul>
+      <li>Permitir a sincronização e publicação programada de vídeos autorizados pelo criador.</li>
+      <li>Monitorar a conformidade de cadência e retenção contra políticas de spam da plataforma.</li>
+      <li>Monitorar a cota de uso diário da API do YouTube para evitar interrupções operacionais.</li>
+    </ul>
+
+    <h2>4. Armazenamento, Segurança e Retenção dos Dados</h2>
+    <p>A Dark Studio Platform opera sob uma arquitetura <strong>Local-First (Auto-hospedada)</strong>:</p>
+    <ul>
+      <li>Os tokens de acesso OAuth 2.0 e credenciais de atualização (refresh tokens) são armazenados localmente e de forma criptografada no ambiente do operador do sistema.</li>
+      <li><strong>Nenhum dado do usuário ou conteúdo de vídeo é compartilhado, alugado ou vendido</strong> para terceiros, anunciantes ou plataformas externas.</li>
+      <li>Não realizamos processamento de dados pessoais para fins publicitários ou de rastreamento comportamental.</li>
+    </ul>
+
+    <h2>5. Como Revogar o Acesso aos seus Dados</h2>
+    <p>O criador ou usuário pode revogar o acesso da Dark Studio Platform a qualquer momento:</p>
+    <ul>
+      <li>Acessando a página oficial de permissões de segurança da conta Google: <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">https://myaccount.google.com/permissions</a>.</li>
+      <li>Ao revogar o acesso, a Dark Studio Platform perde imediatamente a capacidade de interagir com o canal no YouTube, e os tokens locais podem ser apagados pelo operador limpando a pasta de credenciais.</li>
+    </ul>
+
+    <h2>6. Exclusão e Solicitação de Remoção de Dados</h2>
+    <p>Como a aplicação não mantém banco de dados centralizado em nuvem compartilhada, a exclusão dos tokens locais e dados de sincronização pode ser realizada a qualquer momento diretamente no ambiente local da plataforma ou através de solicitação por meio dos nossos canais de suporte.</p>
+
+    <h2>7. Contato</h2>
+    <p>Para dúvidas, solicitações ou esclarecimentos sobre esta Política de Privacidade ou sobre o uso das APIs do YouTube nesta aplicação, entre em contato através do repositório oficial do projeto.</p>
+
+    <footer>
+      <p>&copy; 2026 Dark Studio Platform. Todos os direitos reservados. Em conformidade com os Serviços de API do YouTube.</p>
+    </footer>
+  </div>
+</body>
+</html>

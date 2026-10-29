@@ -250,7 +250,9 @@ def main():
             "UCbO67ez7TKOJ8C_kpUF4t5Q": ("Ain't No Human", "channel_4_token.json", []),
         }
 
-        # Alerta se o canal selecionado for diferente do solicitado no comando
+        # Alerta e proteção se o canal selecionado for diferente do solicitado no comando
+        p2_channels = ("UCIjEnT4adPYVyi0UlrCITBA", "UCbO67ez7TKOJ8C_kpUF4t5Q")
+        is_p2_flow = channel_id in p2_channels
         if channel_id in TARGET_MAP and actual_id != channel_id:
             expected_name = TARGET_MAP[channel_id][0]
             print("\n" + "!" * 70)
@@ -258,8 +260,16 @@ def main():
             print(f"  Você passou o comando para:   '{expected_name}' ({channel_id})")
             print(f"  Mas na tela do Google escolheu: '{actual_title}' ({actual_id})")
             print("!" * 70)
-            print("  Por segurança do branding, selecione o canal correto na próxima tela.")
-            print("!" * 70 + "\n")
+            
+            # Se tentou autenticar um canal do Projeto 2 usando as chaves do Projeto 1 (ou vice-versa), rejeita
+            if is_p2_flow and actual_id not in p2_channels:
+                print(f"  [ERRO CRÍTICO] O canal selecionado ({actual_title}) pertence ao Projeto 1, mas você usou as credenciais do Projeto 2!")
+                print("  Operação cancelada para não quebrar o particionamento de cotas.")
+                return
+            elif not is_p2_flow and actual_id in p2_channels:
+                print(f"  [ERRO CRÍTICO] O canal selecionado ({actual_title}) pertence ao Projeto 2 (Dark Auth2), mas você usou as credenciais do Projeto 1!")
+                print("  Operação cancelada para não quebrar o particionamento de cotas.")
+                return
 
         # Salva no arquivo do canal real
         real_token_file = CREDENTIALS_DIR / f"{actual_id}_token.json"
